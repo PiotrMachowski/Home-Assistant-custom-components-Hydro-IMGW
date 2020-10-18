@@ -5,6 +5,8 @@
 
 This custom integration retrieves data from hydro stations from [hydro.imgw.pl](https://hydro.imgw.pl/#map/19.5,51.5,7,true,false,0).
 
+![example](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/blob/master/example.png)
+
 ## Configuration
 
 | Key | Type | Required | Value | Description |
