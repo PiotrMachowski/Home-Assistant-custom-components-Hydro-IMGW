@@ -1,0 +1,12 @@
+{
+  "domain": "hydro_imgw",
+  "name": "Hydro IMGW",
+  "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW",
+  "dependencies": [],
+  "codeowners": [
+    "@PiotrMachowski"
+  ],
+  "requirements": [
+    "requests"
+  ]
+}
