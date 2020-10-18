@@ -10,7 +10,7 @@ This custom integration retrieves data from hydro stations from [hydro.imgw.pl](
 | Key | Type | Required | Value | Description |
 |---|---|---|---|---|
 | `platform` | string | true | `hydro_imgw` | Name of a platform |
-| `name` | string | false |   | Desired name of camera entity |
+| `name` | string | false |   | Desired name of a entity |
 | `station_id` | string | true |   | ID of a station to monitor (a number from URL) |
 
 ## Example configuration
