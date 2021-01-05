@@ -50,18 +50,18 @@ class HydroImgwSensor(Entity):
     @property
     def state(self):
         if self._data is not None:
-            self._state = HydroImgwSensor.extractor(self._data, "status.currentValue")
+            self._state = HydroImgwSensor.extractor(self._data, "status.currentState.value")
         return self._state
 
     @property
     def device_state_attributes(self):
         attr_paths = {
-            "current_date": "status.currentDate",
-            "previous_date": "status.previousDate",
-            "alarm_value": "status.alarmValue",
-            "warning_value": "status.warningValue",
-            "high_value": "status.highValue",
-            "low_value": "status.lowValue",
+            "current_date": "status.currentState.date",
+            "previous_date": "status.previousState.date",
+            "alarm_value": "alarmValue",
+            "warning_value": "warningValue",
+            "high_value": "highValue",
+            "low_value": "lowValue",
             "trend": "trend",
             "name": "name",
             "state": "state",
