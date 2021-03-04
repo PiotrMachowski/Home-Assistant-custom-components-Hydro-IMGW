@@ -3,10 +3,7 @@
   "name": "Hydro IMGW",
   "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW",
   "dependencies": [],
-  "codeowners": [
-    "@PiotrMachowski"
-  ],
-  "requirements": [
-    "requests"
-  ]
+  "codeowners": ["@PiotrMachowski"],
+  "requirements": ["requests"],
+  "version": "v1.0.1"
 }
