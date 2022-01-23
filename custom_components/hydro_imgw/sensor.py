@@ -40,7 +40,7 @@ class HydroImgwSensor(Entity):
 
     @property
     def name(self):
-        name = self._station_id if self._data is None else self.device_state_attributes["name"]
+        name = self._station_id if self._data is None else self.extra_state_attributes["name"]
         return '{} - {}'.format(self._platform_name, name)
 
     @property
