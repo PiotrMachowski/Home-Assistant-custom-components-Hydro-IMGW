@@ -21,7 +21,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /home/runner/work/Home-Assistant-custom-components-Hydro-IMGW/Home-Assistant-custom-components-Hydro-IMGW/custom_components/froggy/hydro_imgw.zip
+          file: /home/runner/work/Home-Assistant-custom-components-Hydro-IMGW/Home-Assistant-custom-components-Hydro-IMGW/custom_components/hydro_imgw/hydro_imgw.zip
           asset_name: hydro_imgw.zip
           tag: ${{ github.ref }}
           overwrite: true
