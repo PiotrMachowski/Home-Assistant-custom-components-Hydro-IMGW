@@ -54,7 +54,7 @@ class HydroImgwSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         attr_paths = {
             "current_date": "status.currentState.date",
             "previous_date": "status.previousState.date",
