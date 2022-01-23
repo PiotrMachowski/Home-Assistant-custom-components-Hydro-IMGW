@@ -64,7 +64,7 @@ class HydroImgwSensor(Entity):
             "low_value": "lowValue",
             "trend": "trend",
             "name": "name",
-            "state": "state",
+            "level": "state",
             "river": "status.river"
         }
         attributes = {}
