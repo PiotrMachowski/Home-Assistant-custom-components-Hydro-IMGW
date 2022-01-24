@@ -39,7 +39,7 @@ After adding a custom repository you can use HACS to install this integration us
 
 ### Manual
 
-To install this integration manually you have to download [*hydro_imgw.zip*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/releases/latest/download/hydro_imgw.zip) extract its contents to `config/custom_components/hydro_imgw` directory:
+To install this integration manually you have to download [*hydro_imgw.zip*](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/releases/latest/download/hydro_imgw.zip) and extract its contents to `config/custom_components/hydro_imgw` directory:
 ```bash
 mkdir -p custom_components/hydro_imgw
 cd custom_components/hydro_imgw
