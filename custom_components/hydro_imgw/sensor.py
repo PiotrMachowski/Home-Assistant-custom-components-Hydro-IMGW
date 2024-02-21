@@ -5,7 +5,7 @@ import requests
 import voluptuous as vol
 
 from homeassistant.components.sensor import (PLATFORM_SCHEMA, ENTITY_ID_FORMAT)
-from homeassistant.const import CONF_NAME, LENGTH_CENTIMETERS
+from homeassistant.const import CONF_NAME, UnitOfLength
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity import async_generate_entity_id
 
@@ -74,7 +74,7 @@ class HydroImgwSensor(Entity):
 
     @property
     def unit_of_measurement(self):
-        return LENGTH_CENTIMETERS
+        return UnitOfLength.CENTIMETERS
 
     def update(self):
         address = 'https://hydro.imgw.pl/api/station/hydro/?id={}'.format(self._station_id)
