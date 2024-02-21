@@ -1,11 +1,11 @@
 {
   "domain": "hydro_imgw",
   "name": "Hydro IMGW",
-  "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW",
-  "issue_tracker": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/issues",
-  "dependencies": [],
   "codeowners": ["@PiotrMachowski"],
+  "dependencies": [],
+  "documentation": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/issues",
   "requirements": ["requests"],
-  "version": "v1.0.4",
-  "iot_class": "cloud_polling"
+  "version": "v1.0.5"
 }
