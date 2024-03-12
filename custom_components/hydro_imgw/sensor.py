@@ -58,18 +58,18 @@ class HydroImgwSensor(Entity):
         attr_paths = {
             "current_date": "status.currentState.date",
             "previous_date": "status.previousState.date",
-            "alarm_value": "alarmValue",
-            "warning_value": "warningValue",
-            "high_value": "highValue",
-            "low_value": "lowValue",
-            "trend": "trend",
-            "name": "name",
-            "level": "state",
+            "alarm_value": "status.alarmValue",
+            "warning_value": "status.warningValue",
+            "trend": "status.trend",
+            "name": "status.description",
+            "level": "stateCode",
             "river": "status.river"
         }
         attributes = {}
         for name, json_path in attr_paths.items():
-            attributes[name] = HydroImgwSensor.extractor(self._data, json_path)
+            attr_value = HydroImgwSensor.extractor(self._data, json_path)
+            if attr_value is not None:
+                attributes[name] = attr_value
         return attributes
 
     @property
@@ -77,17 +77,16 @@ class HydroImgwSensor(Entity):
         return UnitOfLength.CENTIMETERS
 
     def update(self):
-        address = 'https://hydro.imgw.pl/api/station/hydro/?id={}'.format(self._station_id)
-        headers = {
-            "host": "hydro.imgw.pl"
-        }
-        request = requests.get(address, headers=headers)
+        address = f"https://hydro-back.imgw.pl/station/hydro/status?id={self._station_id}"
+        request = requests.get(address)
         if request.status_code == 200 and request.content.__len__() > 0:
             self._data = request.json()
 
     @staticmethod
     def extractor(json, path):
         def extractor_arr(json_obj, path_array):
+            if path_array[0] not in json_obj:
+                return None
             if len(path_array) > 1:
                 return extractor_arr(json_obj[path_array[0]], path_array[1:])
             return json_obj[path_array[0]]
