@@ -23,6 +23,9 @@ This custom integration retrieves data from hydro stations from [hydro.imgw.pl](
 
 ![example](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/blob/master/example.png)
 
+> [!IMPORTANT]
+>
+> Since Home Assistant 2024.6 it is recommended to use built-in [IMGW-PIB](https://home-assistant.io/integrations/imgw_pib/) integration instead.
 
 ## Installation
 
