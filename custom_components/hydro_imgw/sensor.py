@@ -4,10 +4,11 @@ import homeassistant.helpers.config_validation as cv
 import requests
 import voluptuous as vol
 
-from homeassistant.components.sensor import (PLATFORM_SCHEMA, ENTITY_ID_FORMAT)
-from homeassistant.const import CONF_NAME, UnitOfLength
+from homeassistant.components.sensor import (PLATFORM_SCHEMA, ENTITY_ID_FORMAT, SensorEntity, SensorStateClass)
+from homeassistant.const import CONF_NAME, UnitOfLength, ATTR_ATTRIBUTION
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity import async_generate_entity_id
+from homeassistant.helpers.reload import async_setup_reload_service
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -15,6 +16,9 @@ SCAN_INTERVAL = timedelta(minutes=10)
 
 DEFAULT_NAME = 'Hydro IMGW'
 CONF_STATION_ID = "station_id"
+DOMAIN = "hydro_imgw"
+PLATFORMS = ["sensor"]
+ATTRIBUTION = 'Data provided by hydro.imgw.pl.'
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
@@ -22,15 +26,16 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
 })
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    await async_setup_reload_service(hass, DOMAIN, PLATFORMS)
     station_id = config.get(CONF_STATION_ID)
     name = config.get(CONF_NAME)
     uid = '{}_{}'.format(DEFAULT_NAME, station_id)
     entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, hass=hass)
-    add_entities([HydroImgwSensor(entity_id, name, station_id)], True)
+    async_add_entities([HydroImgwSensor(entity_id, name, station_id)], True)
 
 
-class HydroImgwSensor(Entity):
+class HydroImgwSensor(SensorEntity):
     def __init__(self, entity_id, name, station_id):
         self.entity_id = entity_id
         self._platform_name = name
@@ -50,7 +55,10 @@ class HydroImgwSensor(Entity):
     @property
     def state(self):
         if self._data is not None:
-            self._state = HydroImgwSensor.extractor(self._data, "status.currentState.value")
+            try:
+                self._state = HydroImgwSensor.extractor(self._data, "status.currentState.value")
+            except:
+                pass
         return self._state
 
     @property
@@ -65,10 +73,11 @@ class HydroImgwSensor(Entity):
             "level": "stateCode",
             "river": "status.river"
         }
-        attributes = {}
+        attributes = {ATTR_ATTRIBUTION: ATTRIBUTION}
         for name, json_path in attr_paths.items():
             attr_value = HydroImgwSensor.extractor(self._data, json_path)
             if attr_value is not None:
+                attr_value = attr_value if ".date" not in name else datetime.datetime.fromisoformat(attr_value)
                 attributes[name] = attr_value
         return attributes
 
@@ -77,10 +86,13 @@ class HydroImgwSensor(Entity):
         return UnitOfLength.CENTIMETERS
 
     def update(self):
-        address = f"https://hydro-back.imgw.pl/station/hydro/status?id={self._station_id}"
-        request = requests.get(address)
-        if request.status_code == 200 and request.content.__len__() > 0:
-            self._data = request.json()
+        try:
+            address = f"https://hydro-back.imgw.pl/station/hydro/status?id={self._station_id}"
+            request = requests.get(address, timeout=240)
+            if request.status_code == 200 and request.content.__len__() > 0:
+                self._data = request.json()
+        except:
+            pass
 
     @staticmethod
     def extractor(json, path):
@@ -90,5 +102,11 @@ class HydroImgwSensor(Entity):
             if len(path_array) > 1:
                 return extractor_arr(json_obj[path_array[0]], path_array[1:])
             return json_obj[path_array[0]]
+        try:
+            return extractor_arr(json, path.split("."))
+        except:
+            return None
 
-        return extractor_arr(json, path.split("."))
+    @property
+    def state_class(self) -> SensorStateClass:
+        return SensorStateClass.MEASUREMENT
