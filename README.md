@@ -17,15 +17,16 @@
 [releases]: https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/releases
 [downloads_total_shield]: https://img.shields.io/github/downloads/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/total
 
-# Hydro IMGW Sensor
-
-This custom integration retrieves data from hydro stations from [hydro.imgw.pl](https://hydro.imgw.pl/#map/19.5,51.5,7,true,false,0).
-
-![example](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/blob/master/example.png)
 
 > [!IMPORTANT]
 >
 > Since Home Assistant 2024.6 it is recommended to use built-in [IMGW-PIB](https://home-assistant.io/integrations/imgw_pib/) integration instead.
+
+# Hydro IMGW Integration
+
+This custom integration retrieves data from hydro stations from [hydro.imgw.pl](https://hydro.imgw.pl/#map/19.5,51.5,7,true,false,0).
+
+![example](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Hydro-IMGW/blob/master/example.png)
 
 ## Installation
 
