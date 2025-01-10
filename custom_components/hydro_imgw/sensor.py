@@ -1,12 +1,11 @@
-from datetime import timedelta
 import logging
+from datetime import timedelta
+
 import homeassistant.helpers.config_validation as cv
 import requests
 import voluptuous as vol
-
 from homeassistant.components.sensor import (PLATFORM_SCHEMA, ENTITY_ID_FORMAT, SensorEntity, SensorStateClass)
 from homeassistant.const import CONF_NAME, UnitOfLength, ATTR_ATTRIBUTION
-from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity import async_generate_entity_id
 from homeassistant.helpers.reload import async_setup_reload_service
 
@@ -88,7 +87,10 @@ class HydroImgwSensor(SensorEntity):
     def update(self):
         try:
             address = f"https://hydro-back.imgw.pl/station/hydro/status?id={self._station_id}"
-            request = requests.get(address, timeout=240)
+            headers = {
+                "User-Agent": "Chrome/131.0.0.0"
+            }
+            request = requests.get(address, timeout=240, headers=headers)
             if request.status_code == 200 and request.content.__len__() > 0:
                 self._data = request.json()
         except:
@@ -102,6 +104,7 @@ class HydroImgwSensor(SensorEntity):
             if len(path_array) > 1:
                 return extractor_arr(json_obj[path_array[0]], path_array[1:])
             return json_obj[path_array[0]]
+
         try:
             return extractor_arr(json, path.split("."))
         except:
